@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title> FINAL PROJECT</title>
+    </head>
+    <body style='background-color: cyan;'>
+        <h1>This is the main page of my final project</h1>
+        <form action="myserver" method="get">
+
+            <p>BASIC LEVEL ACTIONS:<p>
+
+            <input type="radio" name="oper" value="listspecies" checked> List species:
+            <p></p>
+            Insert a limit for the species that you want to show:  <input type="number" name="quantity" min="0" max="400">
+            <p></p>
+            <input type="radio" name="oper" value="karyotype"> Karyotype:
+            <p></p>
+            Insert the specie that you want to know about:  <input type="text" name="specie">
+            <p></p>
+            <input type="radio" name="oper" value="chromlength"> Chromosome length:
+            <p></p>
+            Insert the specie that you want to know about:  <input type="text" name="specie">
+            <p></p>
+            Insert the chromosome that you want to know about:  <input type="number" name="chromosome" min="0" max="20">
+            <br><br>
+            <input type="submit"/>
+        </form>
+    </body>
+</html>
