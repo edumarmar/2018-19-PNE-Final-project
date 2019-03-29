@@ -46,44 +46,48 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             server = "http://rest.ensembl.org"
             headers = {"Content-Type": "application/json", "Accept": "application/json"}
             info=[]
+            try:
+                if variables['oper']== 'listspecies':
+                    resource = "/info/species"
+                    r = requests.get(server + resource, headers=headers)
+                    decoded = r.json()
+                    species = (decoded['species'])
+                    for i in species:
+                        info.append(i['name'])
+                    try:
+                        info=info[0:int(variables['quantity'])]
+                    except:
+                        pass
 
-            if variables['oper']== 'listspecies':
-                resource = "/info/species"
-                r = requests.get(server + resource, headers=headers)
-                decoded = r.json()
-                species = (decoded['species'])
-                for i in species:
-                    info.append(i['name'])
-                try:
-                    info=info[0:int(variables['quantity'])]
-                except:
-                    pass
+                    info='<p></p>'.join(info)
 
-                info='<p></p>'.join(info)
+                elif variables['oper']== 'karyotype':
+                    resource="/info/assembly/"+variables['specie']+'?'
+                    r = requests.get(server + resource, headers=headers)
+                    decoded = r.json()
+                    info = decoded['karyotype']
+                    info=','.join(info)
 
-            elif variables['oper']== 'karyotype':
-                resource="/info/assembly/"+variables['specie']+'?'
-                r = requests.get(server + resource, headers=headers)
-                decoded = r.json()
-                info = decoded['karyotype']
-                info=','.join(info)
+                elif variables['oper']== 'chromlength':
+                    resource = "/info/assembly/" + variables['specie']+'?'
+                    r = requests.get(server + resource, headers=headers)
+                    decoded = r.json()
+                    karyo = decoded['karyotype']
+                    karyo.remove('MT')
 
-            elif variables['oper']== 'chromlength':
-                resource = "/info/assembly/" + variables['specie']+'?'
-                r = requests.get(server + resource, headers=headers)
-                decoded = r.json()
-                karyo = decoded['karyotype']
-                karyo.remove('MT')
+                    chromosomes = decoded['top_level_region']
+                    for chrom in chromosomes:
+                        if chrom['name']==variables['chromosome']:
+                            info=('The chromosome '+chrom['name']+ ' of a '+variables['specie']+' has a lenght of: '+str(chrom['length'])+'nm')
 
-                chromosomes = decoded['top_level_region']
-                for chrom in chromosomes:
-                    if chrom['name']==variables['chromosome']:
-                        info=('The chromosome '+chrom['name']+ ' of a '+variables['specie']+' has a lenght of: '+str(chrom['length'])+'nm')
+                f = open('response.html', 'r')
+                content = f.read()
+                content = content.replace('msg', info)
 
+            except:
 
-            f = open('response.html', 'r')
-            content = f.read()
-            content = content.replace('msg', info)
+                f=open('error.html', 'r')
+                content=f.read()
 
 
         # generating the response message
