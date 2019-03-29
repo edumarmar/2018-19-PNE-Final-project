@@ -9,4 +9,9 @@ r = requests.get(server+resource, headers=headers)
 
 decoded=r.json()
 karyo=decoded['karyotype']
-print(karyo)
+karyo.remove('MT')
+
+chromosomes=decoded['top_level_region']
+for chrom in chromosomes:
+    if chrom['name'] in karyo:
+        print(chrom['name'], chrom['length'])
