@@ -2,11 +2,12 @@ import http.server
 import socketserver
 import termcolor
 import requests
+from urllib import parse
+
 
 
 #avoiding 'port already in use' warning
 socketserver.TCPServer.allow_reuse_address = True
-
 
 #defining the server's port
 PORT = 8000
@@ -34,12 +35,9 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         if i != -1:
             #processing the message from the client with urllib
-            from urllib import parse
-            url = path
-            parse.urlsplit(url)
-            parse.parse_qs(parse.urlsplit(url).query)
-            variables=dict(parse.parse_qsl(parse.urlsplit(url).query))
-            print(variables)
+            parse.urlsplit(path)
+            parse.parse_qs(parse.urlsplit(path).query)
+            variables=dict(parse.parse_qsl(parse.urlsplit(path).query))
 
             #retrieving the information
 
@@ -47,7 +45,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             headers = {"Content-Type": "application/json", "Accept": "application/json"}
             info=[]
             try:
-                if variables['oper']== 'listspecies':
+                if 'listSpecies' in path:
                     resource = "/info/species"
                     r = requests.get(server + resource, headers=headers)
                     decoded = r.json()
@@ -61,23 +59,22 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
                     info='<p></p>'.join(info)
 
-                elif variables['oper']== 'karyotype':
+                elif 'karyotype' in path:
                     resource="/info/assembly/"+variables['specie']+'?'
                     r = requests.get(server + resource, headers=headers)
                     decoded = r.json()
                     info = decoded['karyotype']
                     info=','.join(info)
 
-                elif variables['oper']== 'chromlength':
+                elif 'chromosomeLength' in path:
                     resource = "/info/assembly/" + variables['specie']+'?'
                     r = requests.get(server + resource, headers=headers)
                     decoded = r.json()
                     karyo = decoded['karyotype']
-                    karyo.remove('MT')
 
                     chromosomes = decoded['top_level_region']
                     for chrom in chromosomes:
-                        if chrom['name']==variables['chromosome']:
+                        if chrom['name']==variables['chromo']:
                             info=('The chromosome '+chrom['name']+ ' of a '+variables['specie']+' has a lenght of: '+str(chrom['length'])+'nm')
 
                 f = open('response.html', 'r')
@@ -102,21 +99,6 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         self.wfile.write(str.encode(content))
 
         return
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

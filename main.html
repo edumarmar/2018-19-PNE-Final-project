@@ -6,25 +6,76 @@
     </head>
     <body style='background-color: cyan;'>
         <h1>This is the main page of my final project</h1>
-        <form action="myserver" method="get">
 
-            <p>BASIC LEVEL ACTIONS:<p>
 
-            <input type="radio" name="oper" value="listspecies" checked> List species:
-            <p></p>
+
+        <h2>BASIC LEVEL ACTIONS:</h2>
+
+
+        <form action="listSpecies" method="get">
+            <h3>>List species action:</h3>
+            <p>You will retrieve a list of the species stored in the ensembl database</p>
             Insert a limit for the species that you want to show:  <input type="number" name="quantity" min="0" max="400">
-            <p></p>
-            <input type="radio" name="oper" value="karyotype"> Karyotype:
-            <p></p>
-            Insert the specie that you want to know about:  <input type="text" name="specie">
-            <p></p>
-            <input type="radio" name="oper" value="chromlength"> Chromosome length:
-            <p></p>
-            Insert the specie that you want to know about:  <input type="text" name="specie">
-            <p></p>
-            Insert the chromosome that you want to know about:  <input type="text" name="chromosome">
-            <br><br>
             <input type="submit"/>
         </form>
+
+
+        <form action="karyotype" method="get">
+            <h3>>Karyotype:</h3>
+            <p>You will retrieve the karyotype information of a specie.</p>
+            <p></p>
+            Insert the specie that you want to know about:  <input type="text" name="specie">
+            <input type="submit"/>
+        </form>
+
+
+        <form action="chromosomeLength" method="get">
+            <h3>>Chromosome length: </h3>
+            <p>You will retrieve the length of a demanded chromosome of a specie</p>
+            Insert the specie that you want to know about:  <input type="text" name="specie">
+            <p></p>
+            Insert the chromosome that you want to know about:  <input type="text" name="chromo">
+            <input type="submit"/>
+            <p></p>
+            <p></p>
+        </form>
+
+
+
+        <h2>MEDIUM LEVEL ACTIONS:</h2>
+
+        <form action="geneSeq" method="get">
+            <h3>>Gene Sequence action:</h3>
+            <p>It will return the sequence of a given human gene</p>
+            Insert the gene that you want to know about:  <input type="text" name="gene">
+            <input type="submit"/>
+        </form>
+
+
+        <form action="geneInfo" method="get">
+            <h3>>Gene Information action:</h3>
+            <p>It will return information about a human gene: start, end, Length, id and Chromose</p>
+            Insert the gene that you want to know about:  <input type="text" name="gene">
+            <input type="submit"/>
+        </form>
+
+
+        <form action="geneCal" method="get">
+            <h3>>Gene Calculations action:</h3>
+            <p>It will perform some calculations on the given human gene and returns the total length and the percentage of all its bases</p>
+            Insert the gene that you want to know about:  <input type="text" name="gene">
+            <input type="submit"/>
+        </form>
+
+        <form action="geneList" method="get">
+                <h3>>Gene list action:</h3>
+                <p>It will return the names of the genes located in the chromosome "chromo" from the start to end positions</p>
+                Insert the chromosome that you want to know about:  <input type="text" name="chromo">
+                <p></p>
+                Choose a start position:  <input type="number" name="start" min="0" max="400">
+                <p></p>
+                Choose an end position:  <input type="number" name="end" min="0" max="400">
+                <input type="submit"/>
+            </form>
     </body>
 </html>
