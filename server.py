@@ -39,16 +39,21 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             parse.parse_qs(parse.urlsplit(path).query)
             variables=dict(parse.parse_qsl(parse.urlsplit(path).query))
 
-            #retrieving the information
+            #function for retrieving the information of the ensembl database:
+            def request(source):
+                server = "http://rest.ensembl.org"
+                headers = {"Content-Type": "application/json", "Accept": "application/json"}
+                r = requests.get(server + resource, headers=headers)
+                decoded = r.json()
+                return decoded
 
-            server = "http://rest.ensembl.org"
-            headers = {"Content-Type": "application/json", "Accept": "application/json"}
+            #Processing the information and getting results
+
             info=[]
             try:
                 if 'listSpecies' in path:
                     resource = "/info/species"
-                    r = requests.get(server + resource, headers=headers)
-                    decoded = r.json()
+                    decoded=request(resource)
                     species = (decoded['species'])
                     for i in species:
                         info.append(i['name'])
@@ -61,21 +66,61 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
                 elif 'karyotype' in path:
                     resource="/info/assembly/"+variables['specie']+'?'
-                    r = requests.get(server + resource, headers=headers)
-                    decoded = r.json()
+                    decoded=request(resource)
                     info = decoded['karyotype']
                     info=','.join(info)
 
                 elif 'chromosomeLength' in path:
                     resource = "/info/assembly/" + variables['specie']+'?'
-                    r = requests.get(server + resource, headers=headers)
-                    decoded = r.json()
+                    decoded=request(resource)
                     karyo = decoded['karyotype']
 
                     chromosomes = decoded['top_level_region']
                     for chrom in chromosomes:
                         if chrom['name']==variables['chromo']:
                             info=('The chromosome '+chrom['name']+ ' of a '+variables['specie']+' has a lenght of: '+str(chrom['length'])+'nm')
+
+                elif 'geneSeq' in path:
+                    resource = "/xrefs/symbol/homo_sapiens/" + variables['gene'] + '?'
+                    decoded=request(resource)
+                    id = decoded[0]['id']
+
+                    resource = "/sequence/id/" + id
+                    decoded=request(resource)
+                    seq = decoded['seq']
+
+                    info = ('The sequence of the gene is: '+ seq)
+                elif 'geneInfo' in path:
+                    resource = "/xrefs/symbol/homo_sapiens/" + variables['gene'] + '?'
+                    decoded=request(resource)
+                    id = decoded[0]['id']
+
+                    resource = "/sequence/id/" + id
+                    decoded=request(resource)
+                    seq = decoded['seq']
+
+                    resource = "/lookup/id/" + id
+                    decoded=request(resource)
+
+                    info= 'This gene starts at: '+ str(decoded['start'])+ '<p></p>This gene ends at: '+ str(decoded['end'])+'<p></p>This gene has a length of: '+str(len(seq))+"<p></p>This gene's ID is: " + id
+
+                elif 'geneCal' in path:
+                    resource = "/xrefs/symbol/homo_sapiens/" + variables['gene'] + '?'
+                    decoded=request(resource)
+                    id = decoded[0]['id']
+
+                    resource = "/sequence/id/" + id
+                    decoded=request(resource)
+                    seq = decoded['seq']
+                    length= len(seq)
+                    perc= {'T': seq.count('T')/length*100,
+                             'A': seq.count('A')/length*100,
+                             'C': seq.count('C')/length*100,
+                             'G': seq.count('G')/length*100}
+
+                    info= 'The total length of the sequence is: '+str(length)+ '<p></p>The percentage of T is: '+ str(perc['T'])+ '%<p></p>The percentage of C is: '+ str(perc['C'])+ '%<p></p>The percentage of G is: '+ str(perc['G'])+ '%<p></p>The percentage of A is: '+ str(perc['A'])+'%'
+
+
 
                 f = open('response.html', 'r')
                 content = f.read()
