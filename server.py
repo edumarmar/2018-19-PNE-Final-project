@@ -47,9 +47,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 decoded = r.json()
                 return decoded
 
+
             #Processing the information and getting results
 
             info=[]
+            json={}
             try:
                 if 'listSpecies' in path:
                     resource = "/info/species"
@@ -62,23 +64,27 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     except:
                         pass
 
+                    json['list_species'] = dict(zip(range(len(info)), info))
                     info='<p></p>'.join(info)
 
                 elif 'karyotype' in path:
                     resource="/info/assembly/"+variables['specie']+'?'
                     decoded=request(resource)
                     info = decoded['karyotype']
+
+                    json['karyotype']=info
                     info=','.join(info)
 
                 elif 'chromosomeLength' in path:
                     resource = "/info/assembly/" + variables['specie']+'?'
                     decoded=request(resource)
-                    karyo = decoded['karyotype']
 
                     chromosomes = decoded['top_level_region']
+                    print(chromosomes)
                     for chrom in chromosomes:
                         if chrom['name']==variables['chromo']:
-                            info=('The chromosome '+chrom['name']+ ' of a '+variables['specie']+' has a lenght of: '+str(chrom['length'])+'nm')
+                            info=('The chromosome '+variables['chromo']+ ' of a '+variables['specie']+' has a lenght of: '+str(chrom['length'])+'nm')
+                            json[variables['chromo']+'_lenght']=str(chrom['length'])
 
                 elif 'geneSeq' in path:
                     resource = "/xrefs/symbol/homo_sapiens/" + variables['gene'] + '?'
@@ -89,6 +95,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     decoded=request(resource)
                     seq = decoded['seq']
 
+                    json['seq_of_'+variables['gene']]=seq
                     info = ('The sequence of the gene is: '+ seq)
                 elif 'geneInfo' in path:
                     resource = "/xrefs/symbol/homo_sapiens/" + variables['gene'] + '?'
@@ -101,7 +108,10 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
                     resource = "/lookup/id/" + id
                     decoded=request(resource)
+                    categories=['start','end', 'length','id']
+                    data=[str(decoded['start']),str(decoded['end']),len(seq), id]
 
+                    json[variables['gene']]=dict(zip(categories, data))
                     info= 'This gene starts at: '+ str(decoded['start'])+ '<p></p>This gene ends at: '+ str(decoded['end'])+'<p></p>This gene has a length of: '+str(len(seq))+"<p></p>This gene's ID is: " + id
 
                 elif 'geneCal' in path:
@@ -118,24 +128,30 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                              'C': seq.count('C')/length*100,
                              'G': seq.count('G')/length*100}
 
+                    json[variables['gene']+'_perc']=perc
                     info= 'The total length of the sequence is: '+str(length)+ '<p></p>The percentage of T is: '+ str(perc['T'])+ '%<p></p>The percentage of C is: '+ str(perc['C'])+ '%<p></p>The percentage of G is: '+ str(perc['G'])+ '%<p></p>The percentage of A is: '+ str(perc['A'])+'%'
 
                 elif 'geneList' in path:
                     resource= resource = "/overlap/region/human/"+str(variables['chromo'])+":"+str(variables['start'])+'-'+str(variables['end'])+'?feature=gene;'
                     decoded=request(resource)
                     info = ''
+                    json['genes_chrom' + variables['chromo']] = []
                     for i in range(len(decoded)):
                         name = decoded[i]['external_name']
                         info += '<p></p>' + str(name)
+                        json['genes_chrom'+variables['chromo']].append(name)
 
                 f = open('response.html', 'r')
                 content = f.read()
                 content = content.replace('msg', info)
 
+
+
             except:
 
                 f=open('error.html', 'r')
                 content=f.read()
+
 
 
         # generating the response message
