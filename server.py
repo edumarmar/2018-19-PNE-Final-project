@@ -123,19 +123,10 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 elif 'geneList' in path:
                     resource= resource = "/overlap/region/human/"+str(variables['chromo'])+":"+str(variables['start'])+'-'+str(variables['end'])+'?feature=gene;'
                     decoded=request(resource)
-                    print(resource)
-
-                    for i in decoded:
-                        name = i['assembly_name']
-                        gene_id = i['gene_id']
-                        info1 = ('Gene name: ' + str(name) + '     Gene id: ' + str(gene_id))
-                        print(info1)
-                        try:
-                            info = info.append(info1)
-                        except:
-                            pass
-                    info = '<p></p>'.join(info)
-
+                    info = ''
+                    for i in range(len(decoded)):
+                        name = decoded[i]['external_name']
+                        info += '<p></p>' + str(name)
 
                 f = open('response.html', 'r')
                 content = f.read()

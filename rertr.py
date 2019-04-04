@@ -1,4 +1,3 @@
-
 import requests
 
 server = "http://rest.ensembl.org"
@@ -14,18 +13,10 @@ print(resource)
 r = requests.get(server + resource, headers=headers)
 decoded = r.json()
 
-info=[]
-for i in decoded:
-    name=i['assembly_name']
-    gene_id=i['gene_id']
-    info1=('Gene name: '+ str(name)+'     Gene id: '+str(gene_id))
-    print(info1)
-    try:
-        info=info.append(info1)
-    except:
-        pass
-
-info = '<p></p>'.join(info)
+info=''
+for i in range(len(decoded)):
+    name=decoded[i]['external_name']
+    info+='<p></p>'+str(name)
 
 
-
+print(info)
