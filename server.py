@@ -1,6 +1,6 @@
 import http.server
 import socketserver
-import termcolor
+
 import requests
 from urllib import parse
 
@@ -18,7 +18,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
 
         # printing the request line
-        termcolor.cprint(self.requestline, 'green')
+        print(self.requestline, 'green')
         print('Path: ' + self.path)
 
         #checking that the url is right
@@ -120,6 +120,21 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
                     info= 'The total length of the sequence is: '+str(length)+ '<p></p>The percentage of T is: '+ str(perc['T'])+ '%<p></p>The percentage of C is: '+ str(perc['C'])+ '%<p></p>The percentage of G is: '+ str(perc['G'])+ '%<p></p>The percentage of A is: '+ str(perc['A'])+'%'
 
+                elif 'geneList' in path:
+                    resource= resource = "/overlap/region/human/"+str(variables['chromo'])+":"+str(variables['start'])+'-'+str(variables['end'])+'?feature=gene;'
+                    decoded=request(resource)
+                    print(resource)
+
+                    for i in decoded:
+                        name = i['assembly_name']
+                        gene_id = i['gene_id']
+                        info1 = ('Gene name: ' + str(name) + '     Gene id: ' + str(gene_id))
+                        print(info1)
+                        try:
+                            info = info.append(info1)
+                        except:
+                            pass
+                    info = '<p></p>'.join(info)
 
 
                 f = open('response.html', 'r')
