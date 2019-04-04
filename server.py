@@ -1,8 +1,8 @@
 import http.server
 import socketserver
-
 import requests
 from urllib import parse
+import json as js
 
 
 
@@ -22,6 +22,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         print('Path: ' + self.path)
 
         #checking that the url is right
+        content_type = 'text/html'
         if self.path== '/':
             f = open("main.html", 'r')
             content = f.read()
@@ -141,14 +142,25 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                         info += '<p></p>' + str(name)
                         json['genes_chrom'+variables['chromo']].append(name)
 
-                f = open('response.html', 'r')
-                content = f.read()
-                content = content.replace('msg', info)
+                if not('json' in variables):
+                    f = open('response.html', 'r')
+                    content = f.read()
+                    content = content.replace('msg', info)
+                    content_type='text/html'
+
+                else:
+
+                    content = json
+                    print(content)
+                    content_type = 'application/json'
+                    with open('data.json', 'w') as outfile:
+                        js.dump(content, outfile)
 
 
-
+                    f=open('data.json','r')
+                    content=f.read()
             except:
-
+                content_type='text/html'
                 f=open('error.html', 'r')
                 content=f.read()
 
@@ -158,7 +170,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         self.send_response(200)
 
         # defining the header:
-        self.send_header('Content-Type', 'text/html')
+        self.send_header('Content-Type', content_type)
         self.send_header('Content-Length', len(str.encode(content)))
         self.end_headers()
 

@@ -1,7 +1,5 @@
-json={}
-list=['hola', 'hola2', 'hola3', 'hola4']
+import json
+content={'caca':{'1':39, '2':324}}
 
-for i in list:
-    json['genes_'].append(i)
-
-print(json)
+with open('data.json', 'w') as outfile:
+    json.dump(content, outfile)
