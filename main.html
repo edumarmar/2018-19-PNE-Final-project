@@ -5,17 +5,23 @@
         <title> FINAL PROJECT</title>
     </head>
     <body style='background-color: cyan;'>
-        <h1>This is the main page of my final project</h1>
+        <h1>FINAL PROJECT: Eduardo M M</h1>
+        <p>Welcome to my final project. This webpage will let you retrieve information from the
+        ensembl data base and perform some operations.</p>
 
 
+
+        <p>*If you want to receive the results in json format, just click the json checkbox.</p>
+        <p>*If you want to receive the results in html format, don't click the checkbox</p>
 
         <h2>BASIC LEVEL ACTIONS:</h2>
 
 
         <form action="listSpecies" method="get">
             <h3>>List species action:</h3>
-            <p>You will retrieve a list of the species stored in the ensembl database</p>
-            Insert a limit for the species that you want to show:  <input type="number" name="quantity" min="0" max="400">
+            <i>**You will retrieve a list of the species stored in the ensembl database</i>
+            <p></p>
+            Insert a limit for the species that you want to show:  <input type="number" name="quantity" min="1" max="162">
             <p></p>
             JSON?--><input type="checkbox" name="json" value="1">
             <input type="submit"/>
@@ -24,7 +30,7 @@
 
         <form action="karyotype" method="get">
             <h3>>Karyotype:</h3>
-            <p>You will retrieve the karyotype information of a specie.</p>
+            <i>**You will retrieve the karyotype information of a specie.</i>
             <p></p>
             Insert the specie that you want to know about:  <input type="text" name="specie">
             <p></p>
@@ -35,7 +41,8 @@
 
         <form action="chromosomeLength" method="get">
             <h3>>Chromosome length: </h3>
-            <p>You will retrieve the length of a demanded chromosome of a specie</p>
+            <i>**You will retrieve the length of a demanded chromosome of a specie</i>
+            <p></p>
             Insert the specie that you want to know about:  <input type="text" name="specie">
             <p></p>
             Insert the chromosome that you want to know about:  <input type="text" name="chromo">
@@ -52,7 +59,8 @@
 
         <form action="geneSeq" method="get">
             <h3>>Gene Sequence action:</h3>
-            <p>It will return the sequence of a given human gene</p>
+            <i>**It will return the sequence of a given human gene</i>
+            <p></p>
             Insert the gene that you want to know about:  <input type="text" name="gene">
             <p></p>
             JSON?--><input type="checkbox" name="json" value="1">
@@ -62,7 +70,8 @@
 
         <form action="geneInfo" method="get">
             <h3>>Gene Information action:</h3>
-            <p>It will return information about a human gene: start, end, Length, id and Chromose</p>
+            <i>**It will return information about a human gene: start, end, Length, id and Chromose</i>
+            <p></p>
             Insert the gene that you want to know about:  <input type="text" name="gene">
             <p></p>
             JSON?--><input type="checkbox" name="json" value="1">
@@ -72,7 +81,8 @@
 
         <form action="geneCal" method="get">
             <h3>>Gene Calculations action:</h3>
-            <p>It will perform some calculations on the given human gene and returns the total length and the percentage of all its bases</p>
+            <i>**It will perform some calculations on the given human gene and returns the total length and the percentage of all its bases</i>
+            <p></p>
             Insert the gene that you want to know about:  <input type="text" name="gene">
             <p></p>
             JSON?--><input type="checkbox" name="json" value="1">
@@ -81,7 +91,8 @@
 
         <form action="geneList" method="get">
                 <h3>>Gene list action:</h3>
-                <p>It will return the names of the genes located in the chromosome "chromo" from the start to end positions</p>
+                <i>**It will return the names of the genes located in the chromosome "chromo" from the start to end positions</i>
+                <p></p>
                 Insert the chromosome that you want to know about:  <input type="text" name="chromo">
                 <p></p>
                 Choose a start position:  <input type="number" name="start" min="0">
