@@ -4,8 +4,6 @@ import requests
 from urllib import parse
 import json as js
 
-
-
 #avoiding 'port already in use' warning
 socketserver.TCPServer.allow_reuse_address = True
 
@@ -62,7 +60,8 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         info = []
         json = {}
 
-        # these are all the possible functions that the user can choose and its operations
+        # these are all the possible functions that the user can choose and its operations.
+        # it retrieves the information and processes it depending on the function demanded
         try:
             if 'listSpecies' in path:
                 resource = "/info/species"
@@ -161,6 +160,8 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     json['genes_chrom' + variables['chromo']].append(name)
 
             content, content_type = self.htmljson(variables, info, json)
+
+        # If the form is incorrect, an error html page appears, with a link to the main page
         except:
             content_type = 'text/html'
             f = open('error.html', 'r')
