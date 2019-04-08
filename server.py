@@ -42,7 +42,6 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         # the content sent will be the json dictionary and not the html page with 'info'
         else:
             content = json
-            print(content)
             content_type = 'application/json'
             with open('data.json', 'w') as outfile:
                 js.dump(content, outfile)
@@ -51,7 +50,8 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         return content, content_type
 
-
+    # Function that retrieves the information of every action on this project and processes it. It stores it either in
+    # a list or string (info) or in a dictionary (for converting then to json)
     def operations(self):
 
         path = self.path
@@ -60,8 +60,9 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         info = []
         json = {}
 
-        # these are all the possible functions that the user can choose and its operations.
-        # it retrieves the information and processes it depending on the function demanded
+        # -These are all the possible functions that the user can choose and its operations.
+        # -It retrieves the information and processes it depending on the function demanded
+        # -The variable decoded it's always the raw information retrieved from the ensembl database.
         try:
             if 'listSpecies' in path:
                 resource = "/info/species"
@@ -189,7 +190,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         # searching for an '=' on the path, just to avoid an error if /favicon.ico appears as the path
         i = path.find('=')
-        # running the operations if an '=' is found
+        # Generating the response for the user if '=' is found (that means that the form has been filled)
         if i != -1:
             content, content_type=self.operations()
 
