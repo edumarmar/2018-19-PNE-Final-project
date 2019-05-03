@@ -4,15 +4,28 @@ import requests
 from urllib import parse
 import json as js
 
+#INFORMATION:
+
+#THIS PROJECT IS ORGANISED WITH THE FOLLOWING THE STRUCTURE:
+
+# - server.py: where the main program is.
+# - main.html: where the form and main page is located as an html
+# - error.html: where the html error page is located
+# - response.html: the information on this html will be replaced with the information asked by the user
+#                   and displayed as an html
+
+
+
 #avoiding 'port already in use' warning
 socketserver.TCPServer.allow_reuse_address = True
 
 #defining the server's port
 PORT = 8000
 
-
+#defining a class for the server using a TestHandler
 class TestHandler(http.server.BaseHTTPRequestHandler):
     # function for retrieving the information of the ensembl database (a request):
+    # I will be using the requests module which is pretty handy for this type of functions
     def retrieve(self, resource):
         server = "http://rest.ensembl.org"
         headers = {"Content-Type": "application/json", "Accept": "application/json"}
@@ -71,7 +84,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 for i in species:
                     info.append(i['common_name'])
                 try:
-                    info = info[0:int(variables['quantity'])]
+                    info = info[0:int(variables['limit'])]
                 except:
                     pass
 
@@ -122,13 +135,13 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
                 resource = "/lookup/id/" + id
                 decoded = self.retrieve(resource)
-                categories = ['start', 'end', 'length', 'id']
-                data = [str(decoded['start']), str(decoded['end']), len(seq), id]
+                categories = ['start', 'end', 'length', 'id', 'chromosome']
+                data = [str(decoded['start']), str(decoded['end']), len(seq), id, str(decoded['seq_region_name'])]
 
                 json[variables['gene']] = dict(zip(categories, data))
                 info = 'This gene starts at: ' + str(decoded['start']) + '<p></p>This gene ends at: ' + str(
                     decoded['end']) + '<p></p>This gene has a length of: ' + str(
-                    len(seq)) + "<p></p>This gene's ID is: " + id
+                    len(seq)) + "<p></p>This gene's ID is: " + id +"<p></p>This gene's chromosome is: " + str(decoded['seq_region_name'])
 
             elif 'geneCal' in path:
                 resource = "/xrefs/symbol/homo_sapiens/" + variables['gene'] + '?'
@@ -160,6 +173,9 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     info += '<p></p>' + str(name)
                     json['genes_chrom' + variables['chromo']].append(name)
 
+                if info=='':
+                    info='Sorry, we have not found any gene in that region'
+
             content, content_type = self.htmljson(variables, info, json)
 
         # If the form is incorrect, an error html page appears, with a link to the main page
@@ -187,12 +203,12 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         # defining the path that the user chose
         path = self.path
-
-        # searching for an '=' on the path, just to avoid an error if /favicon.ico appears as the path
-        i = path.find('=')
-        # Generating the response for the user if '=' is found (that means that the form has been filled)
-        if i != -1:
-            content, content_type=self.operations()
+        functions= ['listSpecies','karyotype','chromosomeLength','geneSeq','geneInfo','geneCal','geneList']
+        # If the function is in the list of functions, we will run the operations. If not, it will keep going with
+        #the code. This will avoid an error if for example the path is 'favicon.ico'
+        for function in functions:
+            if function in path:
+                content, content_type = self.operations()
 
         # generating the response message
         self.send_response(200)

@@ -1,0 +1,134 @@
+TEST REPORT FOR THE BASIC LEVEL
+
+INFORMATION:
+
+ON EVERY FUNCTION THERE IS A SECTION WITH  *******An error page will appear if*******.
+ON THAT CASE, THIS WILL BE THE OUTPUT
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title> ERROR </title>
+    </head>
+    <body style='background-color: grey;'>
+    <h1>BIG ERROR!</h1>
+    <h3>There has been a problem in your form, please make sure that the information provided is correct</h3>
+    ><a href="/">Main page</a>
+    </body>
+</html>
+
+
+
+-TEST REPORT:
+
+-----LIST SPECIES-----
+
+-Try: http://localhost:8000/listSpecies?limit=10
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title> RESULTS </title>
+    </head>
+    <body style='background-color: yellow;'>
+    <h1>RESULTS:</h1>
+        <p><h3>These are the species requested from the ensembl database:</h3><p></p>Collared flycatcher<p></p>American beaver<p></p>Sea squirt Ciona intestinalis<p></p>central bearded dragon<p></p>golden-collared manakin<p></p>steppe mouse<p></p>white-throated sparrow<p></p>Ord's kangaroo rat<p></p>Northern white-cheeked gibbon<p></p>house mouse</p>
+        ><a href="/">Main page</a>
+    </body>
+</html>
+
+Try: http://localhost:8000/listSpecies
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title> RESULTS </title>
+    </head>
+    <body style='background-color: yellow;'>
+    <h1>RESULTS:</h1>
+        <p><h3>These are the species requested from the ensembl database:</h3><p></p>house mouse<p></p>human<p></p>domestic guinea pig<p></p>house mouse<p></p>Midas cichlid<p></p>green anole<p></p>White-headed capuchin<p></p>ballan wrasse<p></p>leopard<p></p>torafugu<p></p>Black snub-nosed monkey<p></p>zig-zag eel<p></p>blue-crowned manakin<p></p>Damara mole rat<p></p>gray short-tailed opossum<p></p>donkey<p></p>southern platyfish<p></p>little spotted kiwi<p></p>ruff<p></p>three-spined stickleback<p></p>Chinese hamster<p></p>steppe mouse<p></p>Indian medaka<p></p>Upper Galilee mountains blind mole rat<p></p>Abingdon island giant tortoise<p></p>spiny chromis<p></p>Asian bonytongue<p></p>Tasmanian devil<p></p>chicken<p></p>coelacanth<p></p>helmeted guineafowl<p></p>house mouse<p></p>sailfin molly<p></p>koala<p></p>house mouse<p></p>Chinese hamster<p></p>house mouse<p></p>naked mole-rat<p></p>Spoon-billed sandpiper<p></p>common mallard<p></p>Bolivian squirrel monkey<p></p>Bengalese finch<p></p>white-tufted-ear marmoset<p></p>Domestic sheep<p></p>Olive baboon<p></p>Crab-eating macaque<p></p>mainland tiger snake<p></p>Goat<p></p>mummichog<p></p>American black bear<p></p>house mouse<p></p>tammar wallaby<p></p>bottlenosed dolphin<p></p>western mosquitofish<p></p>domestic cat<p></p>bonobo<p></p>Northern white-cheeked gibbon<p></p>African green monkey<p></p>cattle<p></p>clown anemonefish<p></p>Shrew mouse<p></p>Japanese quail<p></p>Philippine tarsier<p></p>Great spotted kiwi<p></p>Pig-tailed macaque<p></p>tuatara<p></p>pink-footed goose<p></p>climbing perch<p></p>Spotted gar<p></p>Golden snub-nosed monkey<p></p>Daurian ground squirrel<p></p>Amazon molly<p></p>turbot<p></p>algerian mouse<p></p>sea lamprey<p></p>western clawed frog<p></p>Agassiz's desert tortoise<p></p>American bison<p></p>house mouse<p></p>channel catfish<p></p>Degu<p></p>Angola colobus<p></p>golden-collared manakin<p></p>eastern happy<p></p>greater bamboo lemur<p></p>western european house mouse<p></p>nine-banded armadillo<p></p>mangrove rivulus<p></p>house mouse<p></p>Arctic ground squirrel<p></p>Western Lowland Gorilla<p></p>gray mouse lemur<p></p>Drill<p></p>central bearded dragon<p></p>American mink<p></p>Great Tit<p></p>rhesus monkey<p></p>platypus<p></p>Japanese medaka HNI<p></p>Inshore hagfish<p></p>dingo<p></p>zebrafish<p></p>house mouse<p></p>bicolor damselfish<p></p>Long-tailed chinchilla<p></p>house mouse<p></p>Mexican tetra<p></p>thirteen-lined ground squirrel<p></p>alpaca<p></p>Australian saltwater crocodile<p></p>white-throated sparrow<p></p>orange clownfish<p></p>Tiger<p></p>domestic turkey<p></p>Ugandan red Colobus<p></p>Alpine marmot<p></p>common canary<p></p>Okarito brown kiwi<p></p>Argentine black and white tegu<p></p>Hoffmann's two-fingered sloth<p></p>Ryukyu mouse<p></p>European shrew<p></p>zebra finch<p></p>gelada<p></p>tiger tail seahorse<p></p>Brazilian guinea pig<p></p>Periophthalmus magnuspinnatus<p></p>Ma's night monkey<p></p>little brown bat<p></p>pig<p></p>Coquerel's sifaka<p></p>fruit fly<p></p>Makobe Island cichlid<p></p>small Madagascar hedgehog<p></p>dark-eyed junco<p></p>red fox<p></p>chimpanzee<p></p>Chinese hamster<p></p>greater amberjack<p></p>western European hedgehog<p></p>African savanna elephant<p></p>lyretail cichlid<p></p>Chinese softshell turtle<p></p>vole<p></p>ocean sunfish<p></p>Polar bear<p></p>emu<p></p>rabbit<p></p>Monterrey platyfish<p></p>sheepshead minnow<p></p>Sea squirt Ciona intestinalis<p></p>red-bellied piranha<p></p>northern pike<p></p>American pika<p></p>Domestic ferret<p></p>Sea squirt Ciona savignyi<p></p>Mongolian gerbil<p></p>Paramormyrops kingsleyae<p></p>Lesser Egyptian jerboa<p></p>Ord's kangaroo rat<p></p>Sooty mangabey<p></p>Nile tilapia<p></p>Bornean orangutan<p></p>Western painted turtle<p></p>zebra mbuna<p></p>horse<p></p>Golden Hamster<p></p>large flying fox<p></p>yellowtail amberjack<p></p>blue tit<p></p>eastern european house mouse<p></p>Atlantic cod<p></p>Burton's mouthbrooder<p></p>baker's yeast<p></p>tongue sole<p></p>dog<p></p>swamp eel<p></p>giant panda<p></p>American beaver<p></p>Budgie<p></p>Northern American deer mouse<p></p>Collared flycatcher<p></p>wild yak<p></p>house mouse<p></p>south eastern house mouse<p></p>Norway rat<p></p>small-eared galago<p></p>naked mole-rat<p></p>C.elegans<p></p>guppy<p></p>Japanese medaka HSOK<p></p>spotted green pufferfish<p></p>birds<p></p>northern tree shrew<p></p>house mouse<p></p>shortfin molly<p></p>Japanese medaka HdrR<p></p>cape rock hyrax<p></p>house mouse</p>
+        ><a href="/">Main page</a>
+    </body>
+</html>
+
+
+
+-----KARYOTYPE-----
+
+-Try: http://localhost:8000/karyotype?specie=mouse
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title> RESULTS </title>
+    </head>
+    <body style='background-color: yellow;'>
+    <h1>RESULTS:</h1>
+        <p><h3>The karyotype of your specie is:</h3><p></p>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,X,Y,MT</p>
+        ><a href="/">Main page</a>
+    </body>
+</html>
+
+Try: http://localhost:8000/karyotype?specie=cat
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title> RESULTS </title>
+    </head>
+    <body style='background-color: yellow;'>
+    <h1>RESULTS:</h1>
+        <p><h3>The karyotype of your specie is:</h3><p></p>A1,A2,A3,B1,B2,B3,B4,C1,C2,D1,D2,D3,D4,E1,E2,E3,F1,F2,X,MT</p>
+        ><a href="/">Main page</a>
+    </body>
+</html>
+
+*******An error page will appear if*******
+http://localhost:8000/karyotype?specie=hola    ------>  since that specie is not on the list
+http://localhost:8000/karyotype?species=hola   -----> since it must be 'specie' not 'species'
+
+
+
+
+-----CHROMOSOME LENGTH-----
+
+-Try: http://localhost:8000/chromosomeLength?specie=mouse&chromo=18
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title> RESULTS </title>
+    </head>
+    <body style='background-color: yellow;'>
+    <h1>RESULTS:</h1>
+        <p>The chromosome 18 of a mouse has a lenght of: 90702639nm</p>
+        ><a href="/">Main page</a>
+    </body>
+</html>
+
+
+
+Try: http://localhost:8000/chromosomeLength?specie=human&chromo=5
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title> RESULTS </title>
+    </head>
+    <body style='background-color: yellow;'>
+    <h1>RESULTS:</h1>
+        <p>The chromosome 5 of a human has a lenght of: 181538259nm</p>
+        ><a href="/">Main page</a>
+    </body>
+</html>
+
+*******An error page will appear if*******
+http://localhost:8000/chromosomeLength?specie=mouse&chromo=80 ----->  Since a mouse does not have a chromosome 80
+http://localhost:8000/chromosomeLength?specie=hola&chromo=3 ----> Since 'hola' specie does not exist
